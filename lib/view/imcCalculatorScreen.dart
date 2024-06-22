@@ -21,12 +21,24 @@ int peso = 40;
 int edad = 20;
 
 double imc = 0;
+String  _imcClassification = 'null';
 
 calcularIMC() {
   setState(() {
-    imc = peso / ((altura - 150) * (0.75 + 50));    
+    imc = peso / ((altura / 100) * (altura / 100)); 
+    if (imc < 18.5) {
+      _imcClassification = 'Bajo peso';
+    } else if (imc >= 18.5 && imc < 24.9) {
+      _imcClassification = 'Peso normal';
+    } else if (imc >= 25 && imc < 29.9) {
+      _imcClassification = 'Sobrepeso';
+    } else {
+      _imcClassification = 'Obesidad';
+    }   
+   
   });
   logDev.log(imc.toStringAsFixed(2));
+  displayIMC();
 }
 
 displayIMC(){
@@ -50,6 +62,16 @@ displayIMC(){
             ),
             Text(
               imc.toStringAsFixed(2),
+              style: const TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            Text(
+              (_imcClassification),
               style: const TextStyle(
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
